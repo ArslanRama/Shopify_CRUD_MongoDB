@@ -1,0 +1,42 @@
+<h1>Welcome to User Page {{userQuery.name}}</h1>
+
+{{#if userQuery.deleted}}
+ <div class='alert alert-warning text-center  mt-3 mb-3' role='alert'>
+    <h4 class="font-weight-bolder m-0">{{userQuery.deleteMessage}}</h4>
+  </div>
+{{/if}}
+<h2>Update Products:</h2>
+<form action="/login/productuser" method="POST" class="form mb-4">
+    <label>Title</label>
+    <input type="text" class="form-control" name="title">
+    <label>Price</label>
+    <input type="number" class="form-control" name="price">
+    <label>Discount</label>
+    <input type="text" class="form-control" name="discount">
+    <label>Quantity</label>
+    <input type="number" class="form-control" name="quantity">
+    <br>
+    <button type="submit" class="btn btn-success">
+        Add New Product
+    </button>
+</form>
+
+{{!-- Nico Card --}}
+<h2>My Daily Products</h2>
+{{#if product}}
+<div class="d-flex justify-content-start px-5 mx-auto my-4 mr-2">
+    {{#each product}}
+    <div class="card mr-2" >
+        <div class="card-body">
+            <h5 class="card-title">{{title}}</h5>
+            <p class="card-text">
+                Price : {{price}} $
+            </p>
+            <h5 class="card-title"> Discount:{{discount}}%</h5>
+            <a href="/login/productuser/update/{{_id}}" class="btn btn-primary">Update</a>
+            <a href="/login/productuser/delete/{{_id}}" class="btn btn-warning">Delete</a>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}
