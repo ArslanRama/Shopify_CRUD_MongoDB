@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const Product = require("../models/Product");
+const User = require("../models/UserSchema");
+const Product = require("../models/ProductSchema");
 const url = require("url");
 const loginForm = (req, res) => {
   const messages = req.query;
@@ -23,7 +23,7 @@ const loginWithUser = (req, res) => {
         if (user.role == "administrator") {
           res.redirect(
             url.format({
-              pathname: "/login/productadmin",
+              pathname: "/login/admin",
               query: { userName: user.name },
             })
           );
@@ -31,7 +31,7 @@ const loginWithUser = (req, res) => {
           console.log(user.name);
           res.redirect(
             url.format({
-              pathname: "/login/productuser",
+              pathname: "/login/user",
               query: { userName: user.name },
             })
           );
@@ -45,7 +45,7 @@ const adminLoggedIn = (req, res) => {
   const userQuery = req.query;
   Product.find((err, product) => {
     User.find((err, user) => {
-      res.render("productadmin", {
+      res.render("admin", {
         products: product,
         users: user,
         userQuery,
@@ -57,7 +57,7 @@ const adminLoggedIn = (req, res) => {
 const createNewUser = (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(() => {
-    res.redirect("/login/productadmin");
+    res.redirect("/login/admin");
   });
 };
 //! DeleteUser Admin
@@ -67,7 +67,7 @@ const deleteUser = (req, res) => {
     console.log("User deleted:", doc);
     res.redirect(
       url.format({
-        pathname: "/login/productadmin",
+        pathname: "/login/admin",
         query: {
           deleteMessage: `User Account: ${doc.name} has been successfully deleted`,
           deleted: true,
@@ -81,7 +81,7 @@ const loginUser = (req, res) => {
   const userQuery = req.query;
   Product.find((err, product) => {
     User.find((err, user) => {
-      res.render("productuser", { product, user, userQuery });
+      res.render("user", { product, user, userQuery });
     });
   });
 };
@@ -89,7 +89,7 @@ const loginUser = (req, res) => {
 const addProduct = (req, res) => {
   const newProduct = new Product(req.body);
   newProduct.save().then(() => {
-    res.redirect("/login/productuser");
+    res.redirect("/login/user");
   });
 };
 //! Update Product User
@@ -100,7 +100,7 @@ const updateProduct = (req, res) => {
     { title: "updating" },
     (err, doc) => {
       console.log("Product updated:", doc);
-      res.redirect("/login/productuser");
+      res.redirect("/login/user");
     }
   );
 };
@@ -111,7 +111,7 @@ const deleteProduct = (req, res) => {
     console.log("Product deleted:", doc);
     res.redirect(
       url.format({
-        pathname: "/login/productuser",
+        pathname: "/login/user",
         query: {
           deleteMessage: `Product Deleted: ${doc.title} has been successfully deleted`,
           deleted: true,

@@ -1,11 +1,11 @@
-<h1>Welcome to Admin Page {{userQuery.name}}</h1>
+<h1>Administration Page {{userQuery.name}}</h1>
 {{#if userQuery.deleted}}
  <div class='alert alert-warning text-center  mt-3 mb-3' role='alert'>
     <h4 class="font-weight-bolder m-0">{{userQuery.deleteMessage}}</h4>
   </div>
 {{/if}}
 <h2>Update Employees:</h2>
-<form action="/login/productadmin" method="POST" class="form mb-4">
+<form action="/login/admin" method="POST" class="form mb-4">
     <label>Name</label>
     <input type="text" class="form-control" name="name" required>
     <label>E-mail</label>
@@ -20,19 +20,19 @@
     <input type="number" class="form-control mb-2" name="salary">
     <label>Role</label>
     <select class="form-select" aria-label="Default select example" name="role" required>
-        <option selected>Choose your Role</option>
-        <option value="administrator">administrator</option>
-        <option value="employee">employee</option>
+        <option selected>Choose Role</option>
+        <option value="administrator">Administrator</option>
+        <option value="employee">Employee</option>
       </select>
     <br>
     <button type="submit" class="btn btn-success">
         Add New User
     </button>
 </form>
-<div class="productAdminDiv">
+<div class="adminDiv">
 <div class="border">
   <div class="productList">
-   <h2>My User List</h2>
+   <h2>User List</h2>
    <div >
  {{#each products}}
    <div class="productItem">
@@ -48,7 +48,7 @@
 </div>
 <div class="border">
     <div class="userList">
-        <h2>My User List</h2>
+        <h2>User List</h2>
         {{#if users}}
         <table>
             <tr>
@@ -69,8 +69,8 @@
                 <td>{{address}}</td>
                 <td>{{salary}}</td>
                 <td>{{role}}</td>
-                <td><button class="btn btn-danger"><a href="/login/productadmin/delete/{{_id}}">Delete</a></button></td>
-                <td><button class="btn btn-warning"><a href="/login/productadmin/update/{{_id}}">Update</a></button></td>
+                <td><button class="btn btn-danger"><a href="/login/admin/delete/{{_id}}">Delete</a></button></td>
+                <td><button class="btn btn-warning"><a href="/login/admin/update/{{_id}}">Update</a></button></td>
             </tr>
             {{/each}}
         </table>

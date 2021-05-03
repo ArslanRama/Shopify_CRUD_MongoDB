@@ -11,18 +11,21 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: false }));
 
-//database
-const DB_NAME = process.env.DB_NAME;
-const DB_LINK = process.env.MONGO_LINK + DB_NAME;
+// database name
+const DB_NAME = process.env.DB_NAME
+const DB_URL = process.env.MongoDB_Link+DB_NAME
+mongoose.connect(DB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+})
+.then(()=> console.log('MongoDB database is successfully connected'))
+.catch(()=> console.log('Database connection failed!'))
 
-mongoose.connect(DB_LINK, {useUnifiedTopology:true, useNewUrlParser:true})
-.then(()=>{console.log('Mongoose found his way to the database...')})
-.catch(err =>{console.log(err)})
 
 
 //! Adding models
-const User = require("./models/User");
-const Product = require("./models/Product");
+const User = require("./models/UserSchema");
+const Product = require("./models/ProductSchema");
 
 //! Routes
 const indexRouter = require("./routes/indexRouter");
