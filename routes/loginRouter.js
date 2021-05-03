@@ -1,23 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const loginController = require("../controllers/login");
+const login = require("../controllers/login");
 
-router.get("/", loginController.loginForm);
-router.post("/", loginController.loginWithUser);
-//! Login Admin
-router.get("/admin", loginController.adminLoggedIn);
-//! createUserAdmin
-router.post("/admin", loginController.createNewUser);
+router.get("/", login.loginForm);
+router.post("/", login.loginWithUser);
+//! Login Admin "R"
+router.get("/admin", login.adminLoggedIn);
 
-
-//! DeleteUser Admin
-router.get("/admin/delete/:id", loginController.deleteUser);
-//! Login User
-router.get("/user", loginController.loginUser);
-//! Add Product User
-router.post("/user", loginController.addProduct);
-//! Update Product User
-router.get("/user/update/:id", loginController.updateProduct);
-//! Delete Product User
-router.get("/user/delete/:id", loginController.deleteProduct);
+//! createUserAdmin "C"
+router.post("/admin", login.createNewUser);
+//! Update User Admin "U"
+router.get("/admin/update/:id", login.updateUser1);
+//! updated user by admin "U"
+router.post("/admin/update/:id", login.updatedUser);
+//! DeleteUser Admin "D"
+router.get("/admin/delete/:id", login.deleteUser);
+//! Login User "R"
+router.get("/user", login.loginUser);
+//! Add Product User "C"
+router.post("/user", login.addProduct);
+//! Update Product User "U"
+router.get("/user/update/:id", login.updateProduct1);
+//! UpdateD Product User "U"
+router.post("/user/update/:id", login.updatedProduct);
+//! Delete Product User "D"
+router.get("/user/delete/:id", login.deleteProduct);
 module.exports = router;

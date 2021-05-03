@@ -1,11 +1,24 @@
-<h1>Administration Page {{userQuery.name}}</h1>
+<div class="p-3">
+<h1>Welcome to Admin Page {{userQuery.name}}</h1>
 {{#if userQuery.deleted}}
- <div class='alert alert-warning text-center  mt-3 mb-3' role='alert'>
+<div class='alert alert-danger text-center  mt-3 mb-3' role='alert'>
     <h4 class="font-weight-bolder m-0">{{userQuery.deleteMessage}}</h4>
-  </div>
+</div>
 {{/if}}
-<h2>Update Employees:</h2>
-<form action="/login/admin" method="POST" class="form mb-4">
+{{#if userQuery.created}}
+<div class='alert alert-success text-center  mt-3 mb-3' role='alert'>
+    <h4 class="font-weight-bolder m-0">{{userQuery.newUserMessage}}</h4>
+</div>
+{{/if}}
+
+
+<div class="col-md-4 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h3>Update Employees:</h3>
+    </div>
+    <div class="card-body">
+      <form action="/login/admin" method="POST" >
     <label>Name</label>
     <input type="text" class="form-control" name="name" required>
     <label>E-mail</label>
@@ -23,66 +36,56 @@
         <option selected>Choose Role</option>
         <option value="administrator">Administrator</option>
         <option value="employee">Employee</option>
-      </select>
+    </select>
     <br>
     <button type="submit" class="btn btn-success">
         Add New User
     </button>
-</form>
-<div class="adminDiv">
-<div class="border">
-  <div class="productList">
-
-   <div >
- {{#each products}}
-   <div class="productItem">
-   <h4>Title: {{title}}</h4>
-   <p>Price {{price}} $</p>
-   <p>Discount: {{discount}} %</p>
-   <p>Quantity: {{quantity}}</p>
-   </div> 
-   {{/each}}
-   </div>
-  
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-<div class="border">
-    <div class="userList">
-        <h2>User List</h2>
-        {{#if users}}
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>E-mail</th>
-                <th>Country</th>
-                <th>Address</th>
-                <th>City and Zip Code</th>
-                <th>Salary</th>
-                <th>Role</th>
-                <th>Delete</th>
-                <th>Update</th>
-            </tr>
-            {{#each users}}
-            <tr>
-                <td>{{name}}</td>
-                <td>{{email}}</td>
-                <td>{{country}}</td>
-                <td>{{address}}</td>
-                <td>{{city_zip_code}}</td>
-                <td>{{salary}}</td>
-                <td>{{role}}</td>
-                <td><button class="btn btn-danger"><a href="/login/admin/delete/{{_id}}">Delete</a></button></td>
-                <td><button class="btn btn-warning"><a href="/login/admin/update/{{_id}}">Update</a></button></td>
-            </tr>
-            {{/each}}
-        </table>
-        {{/if}}
-    </div> 
-</div>
 
-     
+
+    <div class="my-5">
+        <div class="userList">
+            <h2>My User List</h2>
+            {{#if users}}
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Country</th>
+                    <th>Address</th>
+                    <th>Salary</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </tr>
+                {{#each users}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td>{{country}}</td>
+                    <td>{{address}}</td>
+                    <td>{{salary}}</td>
+                    <td>{{role}}</td>
+                    <td class="text-center"><button class="btn btn-danger"><a href="/login/admin/delete/{{_id}}">Delete</a></button>
+                    </td>
+                    <td class="text-center"><button class="btn btn-warning"><a href="/login/admin/update/{{_id}}">Update</a></button>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+        </div>
     </div>
 
-    
+
+</div>
+
+</div>
+
 
 </div>

@@ -1,10 +1,12 @@
 const User = require("../models/UserSchema");
 const Product = require("../models/ProductSchema");
 const url = require("url");
+
 const loginForm = (req, res) => {
   const messages = req.query;
   res.render("login", { messages });
 };
+
 const loginWithUser = (req, res) => {
   User.findOne(
     { email: req.body.email, password: req.body.password },
@@ -28,7 +30,6 @@ const loginWithUser = (req, res) => {
             })
           );
         } else {
-          console.log(user.name);
           res.redirect(
             url.format({
               pathname: "/login/user",
@@ -53,14 +54,44 @@ const adminLoggedIn = (req, res) => {
     });
   });
 };
-//! Create User Admin
+//! CreateUser Admin
 const createNewUser = (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(() => {
-    res.redirect("/login/admin");
+    res.redirect(
+      url.format({
+        pathname: "/login/admin",
+        query: {
+          newUserMessage: `New User Account:${newUser.name} has been successfully Created`,
+          created: true,
+        },
+      })
+    );
   });
 };
-//! Delete User Admin
+
+//! Update user
+//  selecting update product
+const updateUser1 = async (req, res) => {
+  const update = await User.findById(req.params.id);
+  res.render("userUpdate", { update });
+};
+// updating user
+const updatedUser = async (req, res) => {
+  const { name, email, password, country, address, salary, role } = req.body;
+  await User.findByIdAndUpdate(req.params.id, {
+    name,
+    email,
+    password,
+    country,
+    address,
+    salary,
+    role,
+  });
+  res.redirect("/login/admin");
+};
+
+//! DeleteUser Admin
 const deleteUser = (req, res) => {
   const deleteUserId = req.params.id;
   User.findByIdAndDelete(deleteUserId, (err, doc) => {
@@ -80,8 +111,8 @@ const deleteUser = (req, res) => {
 const loginUser = (req, res) => {
   const userQuery = req.query;
   Product.find((err, product) => {
-    User.find((err, user) => {
-      res.render("user", { product, user, userQuery });
+    User.find((err, users) => {
+      res.render("user", { product, users, userQuery });
     });
   });
 };
@@ -92,18 +123,25 @@ const addProduct = (req, res) => {
     res.redirect("/login/user");
   });
 };
-//! Update Product User
-const updateProduct = (req, res) => {
-  const updateProduct = req.params.id;
-  Product.findByIdAndUpdate(
-    updateProduct,
-    { title: "updating" },
-    (err, doc) => {
-      console.log("Product updated:", doc);
-      res.redirect("/login/user");
-    }
-  );
+//! User update Product
+//  selecting update product
+const updateProduct1 = async (req, res) => {
+  const update = await Product.findById(req.params.id);
+  res.render("productUpdate", { update });
 };
+// updating product
+const updatedProduct = async (req, res) => {
+  const { title, price, discount, quantity } = req.body;
+  await Product.findByIdAndUpdate(req.params.id, {
+    title,
+    price,
+    discount,
+    quantity,
+  });
+
+  res.redirect("/login/user");
+};
+
 //! Delete Product
 const deleteProduct = (req, res) => {
   const deleteProductId = req.params.id;
@@ -120,14 +158,18 @@ const deleteProduct = (req, res) => {
     );
   });
 };
+
 module.exports = {
   loginForm,
   loginWithUser,
   adminLoggedIn,
   createNewUser,
+  updateUser1,
+  updatedUser,
   deleteUser,
   loginUser,
   addProduct,
-  updateProduct,
+  updateProduct1,
+  updatedProduct,
   deleteProduct,
 };
