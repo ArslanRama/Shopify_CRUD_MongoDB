@@ -53,14 +53,14 @@ const adminLoggedIn = (req, res) => {
     });
   });
 };
-//! CreateUser Admin
+//! Create User Admin
 const createNewUser = (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(() => {
     res.redirect("/login/admin");
   });
 };
-//! DeleteUser Admin
+//! Delete User Admin
 const deleteUser = (req, res) => {
   const deleteUserId = req.params.id;
   User.findByIdAndDelete(deleteUserId, (err, doc) => {
