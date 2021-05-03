@@ -6,12 +6,12 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8080;
 
 
-//settings
+//! settings
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: false }));
 
-// database name
+//! database name and url
 const DB_NAME = process.env.DB_NAME
 const DB_URL = process.env.MongoDB_Link+DB_NAME
 mongoose.connect(DB_URL, {
