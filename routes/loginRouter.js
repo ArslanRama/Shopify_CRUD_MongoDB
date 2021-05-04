@@ -3,26 +3,36 @@ const router = express.Router();
 const login = require("../controllers/login");
 
 router.get("/", login.loginForm);
-router.post("/", login.loginWithUser);
-//! Login Admin "R"
-router.get("/admin", login.adminLoggedIn);
+router.post("/", login.loginUser);
 
-//! createUserAdmin "C"
+//! ADMIN
+router.get("/admin", login.loginAdmin);
+
+// Create a New user  
 router.post("/admin", login.createNewUser);
-//! Update User Admin "U"
-router.get("/admin/update/:id", login.updateUser1);
-//! updated user by admin "U"
+
+// Update User 
+router.get("/admin/update/:id", login.updateUser);
+
+// Updated User
 router.post("/admin/update/:id", login.updatedUser);
-//! DeleteUser Admin "D"
+
+// Delete User 
 router.get("/admin/delete/:id", login.deleteUser);
-//! Login User "R"
-router.get("/user", login.loginUser);
-//! Add Product User "C"
+
+//! USER
+router.get("/user", login.loginUserAccount);
+
+// Add Product 
 router.post("/user", login.addProduct);
-//! Update Product User "U"
-router.get("/user/update/:id", login.updateProduct1);
-//! UpdateD Product User "U"
+
+// Update Product
+router.get("/user/update/:id", login.updateProduct);
+
+// Updated Product
 router.post("/user/update/:id", login.updatedProduct);
-//! Delete Product User "D"
+
+// Delete Product
 router.get("/user/delete/:id", login.deleteProduct);
+
 module.exports = router;

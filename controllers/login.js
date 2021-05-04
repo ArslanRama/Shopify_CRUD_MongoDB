@@ -6,8 +6,7 @@ const loginForm = (req, res) => {
   const messages = req.query;
   res.render("login", { messages });
 };
-
-const loginWithUser = (req, res) => {
+const loginUser = (req, res) => {
   User.findOne(
     { email: req.body.email, password: req.body.password },
     (err, user) => {
@@ -16,8 +15,8 @@ const loginWithUser = (req, res) => {
           url.format({
             pathname: "/login",
             query: {
-              failMessage: "E-mail or Password is wrong, please check it!",
-              falseEntered: true,
+              errorMessage: "E-mail or Password is wrong, please check it!",
+              falseEntry: true,
             },
           })
         );
@@ -30,6 +29,7 @@ const loginWithUser = (req, res) => {
             })
           );
         } else {
+          console.log(user.name);
           res.redirect(
             url.format({
               pathname: "/login/user",
@@ -41,8 +41,9 @@ const loginWithUser = (req, res) => {
     }
   );
 };
-//! Login Admin
-const adminLoggedIn = (req, res) => {
+
+//! ADMIN
+const loginAdmin = (req, res) => {
   const userQuery = req.query;
   Product.find((err, product) => {
     User.find((err, user) => {
@@ -54,44 +55,37 @@ const adminLoggedIn = (req, res) => {
     });
   });
 };
-//! CreateUser Admin
+
+// Create User
 const createNewUser = (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(() => {
-    res.redirect(
-      url.format({
-        pathname: "/login/admin",
-        query: {
-          newUserMessage: `New User Account:${newUser.name} has been successfully Created`,
-          created: true,
-        },
-      })
-    );
+    res.redirect("/login/admin");
   });
 };
 
-//! Update user
-//  selecting update product
-const updateUser1 = async (req, res) => {
+//  Update User with findById
+const updateUser = async (req, res) => {
   const update = await User.findById(req.params.id);
   res.render("userUpdate", { update });
 };
-// updating user
+// Updated User with findByIdAndUpdate
 const updatedUser = async (req, res) => {
-  const { name, email, password, country, address, salary, role } = req.body;
+  const { name, email, password, country, address, zip, salary, role } = req.body;
   await User.findByIdAndUpdate(req.params.id, {
     name,
     email,
     password,
     country,
     address,
+    zip,
     salary,
     role,
   });
   res.redirect("/login/admin");
 };
 
-//! DeleteUser Admin
+// Delete User with findByIdAndDelete
 const deleteUser = (req, res) => {
   const deleteUserId = req.params.id;
   User.findByIdAndDelete(deleteUserId, (err, doc) => {
@@ -107,29 +101,31 @@ const deleteUser = (req, res) => {
     );
   });
 };
-//! Login User
-const loginUser = (req, res) => {
+
+//! USER
+const loginUserAccount = (req, res) => {
   const userQuery = req.query;
   Product.find((err, product) => {
-    User.find((err, users) => {
-      res.render("user", { product, users, userQuery });
+    User.find((err, user) => {
+      res.render("user", { product, user, userQuery });
     });
   });
 };
-//! User Add Product
+
+// Add Product
 const addProduct = (req, res) => {
   const newProduct = new Product(req.body);
   newProduct.save().then(() => {
     res.redirect("/login/user");
   });
 };
-//! User update Product
-//  selecting update product
-const updateProduct1 = async (req, res) => {
+
+// Update Product with findById
+const updateProduct = async (req, res) => {
   const update = await Product.findById(req.params.id);
   res.render("productUpdate", { update });
 };
-// updating product
+// Updated Product with findByIdAndUpdate
 const updatedProduct = async (req, res) => {
   const { title, price, discount, quantity } = req.body;
   await Product.findByIdAndUpdate(req.params.id, {
@@ -142,7 +138,7 @@ const updatedProduct = async (req, res) => {
   res.redirect("/login/user");
 };
 
-//! Delete Product
+//  User Delete Product with findByIdAndDelete
 const deleteProduct = (req, res) => {
   const deleteProductId = req.params.id;
   Product.findByIdAndDelete(deleteProductId, (err, doc) => {
@@ -161,15 +157,15 @@ const deleteProduct = (req, res) => {
 
 module.exports = {
   loginForm,
-  loginWithUser,
-  adminLoggedIn,
+  loginUser,
+  loginAdmin,
   createNewUser,
-  updateUser1,
+  updateUser,
   updatedUser,
   deleteUser,
-  loginUser,
+  loginUserAccount,
   addProduct,
-  updateProduct1,
+  updateProduct,
   updatedProduct,
   deleteProduct,
 };

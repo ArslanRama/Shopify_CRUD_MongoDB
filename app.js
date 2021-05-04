@@ -1,12 +1,19 @@
 const express = require("express");
 const app = express();
+
+//! Favicon
+const favicon = require('serve-favicon')
+const path = require('path')
+
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 
 //! settings
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: false }));
@@ -22,20 +29,16 @@ mongoose.connect(DB_URL, {
 .catch(()=> console.log('Database connection failed!'))
 
 
-
-//! Adding models
-const User = require("./models/UserSchema");
-const Product = require("./models/ProductSchema");
-
 //! Routes
 const indexRouter = require("./routes/indexRouter");
-const signUpRouter = require("./routes/signUpRouter");
+const signupRouter = require("./routes/signupRouter");
 const loginRouter = require("./routes/loginRouter");
-//? Home
+
+//! Home
 app.use("/", indexRouter);
-//? Register
-app.use("/register", signUpRouter);
-//? Login
+//! Register
+app.use("/register", signupRouter);
+//! Login
 app.use("/login", loginRouter);
 
 

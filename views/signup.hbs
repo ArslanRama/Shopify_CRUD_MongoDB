@@ -1,0 +1,73 @@
+<div class="signup-form-container">
+  <form action="/register" method="POST">
+  <div class="title text-center my-5">
+       <img height="35px" src="/images/shopifyLogo.svg" alt="logo">
+       <h1 class="text-center py-2" >Sign Up</h1>
+       <hr>
+      </div>
+   
+    <div class="">
+      <label for="inputEmail4" class="form-label"><b> E-Mail</b></label>
+      <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="example@email.com"  required/>
+    </div>
+
+    <div class="">
+      <label for="inputPassword4" class="form-label"><b>Password </b></label>
+      <input type="password" class="form-control" id="inputPassword4" name="password" minlength="5" required/>
+    </div>
+
+    <div class="">
+      <label for="inputName" class="form-label"><b>Name</b></label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Write your full name" />
+    </div>
+
+    <div class="">
+      <label for="inputCountry" class="form-label"><b>Country</b></label>
+      <input type="text" class="form-control" id="inputCountry" name="country" />
+    </div>
+
+    <div class="">
+      <label for="inputAdress" class="form-label"><b>Adress</b></label>
+      <input type="text" class="form-control" id="inputAdress" name="address" placeholder="Apartment, studio, or floor"/>
+    </div>
+    <div class="">
+      <label for="inputZip"><b>Zip</b></label>
+      <input type="text" class="form-control" id="inputZip">
+    </div>
+
+    <div class="">
+      <label for="inputSalary" class="form-label"><b>Salary</b></label>
+      <input type="number" class="form-control" id="inputSalary" name="salary" minlength="5" placeholder="€" currency="Euro"/>
+      </div>
+
+   
+{{!-- Sign Up as Admin or User --}}
+    <div >
+       <label for="inputRole" class="form-label"><b></b></label>
+      <select class="form-select" aria-label="Default select example" name="role" required>
+        <option></option>
+        <option value="Administrator">Administrator</option>
+        <option value="Employee">Employee</option>
+      </select>
+    </div>
+
+   
+      <div class="col-sm-12 mt-2 mb-4">
+         <button type="submit" class='btn btn-success'>Sign up</button>
+        </div>
+       {{!-- Terms and Conditions --}}
+                <div class=" my-4">
+                    <div class="form-group">
+                        <div class="w-100">
+                               
+                           <label class="checkbox-wrap checkbox-primary w-100">
+                               I agree to Terms and Conditions
+                               <input type="checkbox" unchecked>
+                                <span class="checkmark">
+                                    </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+  </form>
+</div>

@@ -1,7 +1,6 @@
 <div class="col-md-4 mx-auto">
   <div class="card">
     <div class="card-header">
-      <h3>Update User</h3>
     </div>
     <div class="card-body">
       <form action="/login/admin/update/{{update.id}}?_method=PUT" method="POST">
@@ -36,14 +35,14 @@
             <div class="form-group">
             <label>Role</label>
           <select class="form-select" aria-label="Default select example" name="role" required>
-        <option selected>Choose New Role</option>
-        <option value="administrator">administrator</option>
-        <option value="employee">employee</option>
+        <option selected>Choose Role</option>
+        <option value="administrator">Administrator</option>
+        <option value="employee">User</option>
       </select>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block" type="submit">
-            Save
+          <button class="btn btn-warning btn-block mt-4" type="submit">
+            Update
           </button>
         </div>
       </form>

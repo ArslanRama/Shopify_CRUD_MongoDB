@@ -1,3 +1,9 @@
-# User System Management with MVC Method
+# A simple website using User System Management with MVC Method
 
-- Project_NODE.JS_MongoDB_HBS_CRUD
+- Node.js
+- Express.js
+- MongoDB
+- MVC method
+- CRUD Method
+- Handlerbars
+
