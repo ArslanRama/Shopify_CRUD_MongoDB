@@ -2,10 +2,12 @@ const User = require("../models/UserSchema");
 const Product = require("../models/ProductSchema");
 const url = require("url");
 
+//! login form 
 const loginForm = (req, res) => {
   const messages = req.query;
   res.render("login", { messages });
 };
+// user login error
 const loginUser = (req, res) => {
   User.findOne(
     { email: req.body.email, password: req.body.password },
